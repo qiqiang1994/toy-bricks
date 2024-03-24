@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>online.qiqiang.toybricks</groupId>
+    <artifactId>toy-bricks-framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>toy-bricks-framework-common</module>
+        <module>toy-bricks-framework-service</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-boot.version>3.2.4</spring-boot.version>
+        <lombok.version>1.18.26</lombok.version>
+        <hutool.version>5.8.25</hutool.version>
+        <r2dbc.mysql.version>0.8.2.RELEASE</r2dbc.mysql.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--项目-->
+            <dependency>
+                <groupId>online.qiqiang.toybricks</groupId>
+                <artifactId>toy-bricks-framework-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>online.qiqiang.toybricks</groupId>
+                <artifactId>toy-bricks-framework-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--spring-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <!--工具类-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--数据库-->
+            <dependency>
+                <groupId>dev.miku</groupId>
+                <artifactId>r2dbc-mysql</artifactId>
+                <version>${r2dbc.mysql.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

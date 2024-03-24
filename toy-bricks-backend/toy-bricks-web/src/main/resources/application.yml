@@ -1,0 +1,7 @@
+server:
+  port: 7777
+spring:
+  r2dbc:
+    url: r2dbc:mysql://localhost:3306/toy_bricks
+    username: root
+    password: root

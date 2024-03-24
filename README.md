@@ -1,1 +1,1 @@
-# toy-bricks
+# toybricks
