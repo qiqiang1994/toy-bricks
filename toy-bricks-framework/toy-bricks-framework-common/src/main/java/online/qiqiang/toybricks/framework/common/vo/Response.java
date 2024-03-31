@@ -15,6 +15,10 @@ public class Response<T> {
     private T data;
     private String msg;
 
+    public static <T> Response<T> success() {
+        return new Response<>(200, null, "成功");
+    }
+
     public static <T> Response<T> success(T data) {
         return new Response<>(200, data, "成功");
     }

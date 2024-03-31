@@ -24,7 +24,9 @@ public class UserRoutingConfiguration {
     public RouterFunction<ServerResponse> monoRouterFunction(UserHandler userHandler) {
         return route()
                 .POST("/user/list", ACCEPT_JSON, userHandler::userPage)
-                .GET("/user/batchCreateUser", ACCEPT_JSON, userHandler::batchCreateUser)
+                .GET("/user/batchCreateUser", ACCEPT_JSON, request -> userHandler.batchCreateUser())
+                .POST("/user/change", ACCEPT_JSON, userHandler::change)
+                .POST("/user/edit", ACCEPT_JSON, userHandler::edit)
                 .build();
     }
 

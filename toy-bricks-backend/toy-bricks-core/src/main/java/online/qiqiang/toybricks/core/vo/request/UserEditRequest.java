@@ -1,28 +1,22 @@
-package online.qiqiang.toybricks.core.vo;
+package online.qiqiang.toybricks.core.vo.request;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-import online.qiqiang.toybricks.framework.servicejson.LongToStringSerializer;
-
-import java.util.List;
 
 /**
  * @author quince
  */
 @Data
-public class UserVO {
-    @JsonSerialize(using = LongToStringSerializer.class)
+public class UserEditRequest {
     private Long id;
     private String username;
     private Integer gender;
-    private User user;
     private String idCard;
     private String email;
     private String address;
     private String createTime;
     private Integer status;
     private String avatar;
-    private List<UserVO> children;
+    private User user;
 
     @Data
     public static class User {
@@ -33,5 +27,4 @@ public class UserVO {
             private Integer age;
         }
     }
-
 }

@@ -1,9 +1,9 @@
 package online.qiqiang.toybricks.core.vo.helper;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import online.qiqiang.toybricks.core.vo.UserVO;
 import online.qiqiang.toybricks.dal.entity.UserEntity;
+import online.qiqiang.toybricks.framework.common.utils.CopyUtil;
 
 import java.time.LocalDateTime;
 
@@ -13,20 +13,13 @@ import java.time.LocalDateTime;
 public class UserVoHelper {
 
     public static UserVO entityToVo(UserEntity entity) {
-        UserVO userVO = new UserVO();
-        userVO.setId(IdUtil.getSnowflakeNextId());
-        userVO.setAddress(entity.getAddress());
-        userVO.setUsername(entity.getUsername());
-        userVO.setEmail(entity.getEmail());
-        userVO.setGender(entity.getGender());
-        userVO.setStatus(entity.getStatus());
+        UserVO userVO = CopyUtil.copy(entity, UserVO.class);
         UserVO.User user = new UserVO.User();
         UserVO.User.Detail detail = new UserVO.User.Detail();
         detail.setAge(entity.getAge());
         user.setDetail(detail);
         userVO.setUser(user);
         userVO.setAvatar("https://qiqiang.oss-cn-hangzhou.aliyuncs.com/muan/avatar-jianchun.jpg");
-        userVO.setIdCard(entity.getIdCard());
         return userVO;
     }
 

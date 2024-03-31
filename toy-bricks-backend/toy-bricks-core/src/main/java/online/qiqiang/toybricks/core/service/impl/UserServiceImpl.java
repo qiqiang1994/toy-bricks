@@ -5,9 +5,12 @@ import online.qiqiang.toybricks.core.service.UserService;
 import online.qiqiang.toybricks.core.vo.UserVO;
 import online.qiqiang.toybricks.core.vo.helper.PageHelper;
 import online.qiqiang.toybricks.core.vo.helper.UserVoHelper;
+import online.qiqiang.toybricks.core.vo.request.UserChangeRequest;
+import online.qiqiang.toybricks.core.vo.request.UserEditRequest;
 import online.qiqiang.toybricks.core.vo.request.UserPageRequest;
 import online.qiqiang.toybricks.dal.entity.UserEntity;
 import online.qiqiang.toybricks.dal.repository.UserRepository;
+import online.qiqiang.toybricks.framework.common.utils.CopyUtil;
 import online.qiqiang.toybricks.framework.common.vo.PageResult;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -39,9 +42,36 @@ public class UserServiceImpl implements UserService {
                         // 对于 name 属性，使用 contains 策略，简单来说就是模糊查询
                         .withMatcher("username", ExampleMatcher.GenericPropertyMatchers.contains()));
         PageRequest pageRequest = PageRequest.of(request.getPageNum() - 1, request.getPageSize());
-
         return userRepository.findBy(example, query -> query.page(pageRequest))
                 .as(pageMono -> PageHelper.pageTransformer(pageMono, UserVoHelper::entityToVo));
+    }
+
+    @Override
+    public Mono<UserVO> change(UserChangeRequest request) {
+        return userRepository.findById(request.getId())
+                .flatMap(user -> {
+                    if (user == null) {
+                        return Mono.error(new RuntimeException("用户不存在"));
+                    }
+                    user.setStatus(request.getStatus());
+                    return userRepository.save(user)
+                            .flatMap(entity -> Mono.just(UserVoHelper.entityToVo(entity)));
+                });
+    }
+
+    @Override
+    public Mono<UserVO> edit(UserEditRequest request) {
+        return userRepository.findById(request.getId())
+                .flatMap(user -> {
+                    if (user == null) {
+                        return Mono.error(new RuntimeException("用户不存在"));
+                    }
+                    UserEntity newUser = CopyUtil.copy(request, UserEntity.class);
+                    newUser.setId(user.getId());
+                    newUser.setAge(request.getUser().getDetail().getAge());
+                    return userRepository.save(newUser)
+                            .flatMap(entity -> Mono.just(UserVoHelper.entityToVo(entity)));
+                });
     }
 
     @Override
